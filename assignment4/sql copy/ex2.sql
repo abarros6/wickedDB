@@ -15,14 +15,16 @@ CREATE TABLE Department(
     studentsEnrolled int,
     PRIMARY KEY (deptName)
 );
-
+--removed instructor no as instructor already holds a reference to classNo
 CREATE TABLE Classroom(
     classroomNo int,
-    homeInstructor int,
     classroomQuantity int,
+    --number of courses tought
     coursesTaught int,
     PRIMARY KEY (classroomNo)
 );
+
+--added reference to department
 CREATE TABLE Instructor(
     instructorNo int,
     classroomNo int,
@@ -33,9 +35,11 @@ CREATE TABLE Instructor(
     salary int,
     PRIMARY KEY (instructorNo),
     FOREIGN KEY (classroomNo) REFERENCES Classroom(classroomNo)
-    ON DELETE SET NULL ON UPDATE CASCADE
-    
+    ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (deptName) REFERENCES Department(deptName)
+    ON DELETE SET NULL ON UPDATE CASCADE  
 );
+
 CREATE TABLE Student(
     studentNo int,
     fName varchar(255),
@@ -53,6 +57,8 @@ CREATE TABLE Student(
     FOREIGN KEY (instructorNo) REFERENCES Instructor(instructorNo)
     ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+--removed schedule
 CREATE TABLE Schedule(
     scheduledToStudent int,
     coursesEnrolled int,
@@ -62,6 +68,7 @@ CREATE TABLE Schedule(
     FOREIGN KEY (studentNo) REFERENCES Student(studentNo)
     ON DELETE SET NULL ON UPDATE CASCADE
 );
+
 CREATE TABLE Course(
     courseID int,
     courseName varchar(255),
@@ -77,6 +84,31 @@ CREATE TABLE Course(
     FOREIGN KEY (instructorNo) REFERENCES Instructor(instructorNo)
     ON DELETE SET NULL ON UPDATE CASCADE
 );
+--changed timing name to section, added id
+CREATE TABLE Section(
+    sectionID int,
+    courseID int,
+    startDate DATE,
+    endDate DATE,
+    startTime TIME,
+    endTime TIME,
+    PRIMARY KEY (sectionID),
+    FOREIGN KEY (courseID) REFERENCES Course(courseID)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+);
+--enrollment now references a section 
+CREATE TABLE Enrollment(
+    studentNo int,
+    sectionID int,
+    dateEnrolled DATE,
+
+    PRIMARY KEY (studentNo,sectionID),
+    FOREIGN KEY (studentNo) REFERENCES Student(studentNo)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (sectionID) REFERENCES Section(sectionID)
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE CourseEquipment(
     deviceNo int,
     deviceName varchar(255),
@@ -90,30 +122,6 @@ CREATE TABLE CourseEquipment(
     ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TABLE Enrollment(
-    studentNo int,
-    courseID int,
-    dateEnrolled DATE,
-    PRIMARY KEY (studentNo,courseID),
-    FOREIGN KEY (studentNo) REFERENCES Student(studentNo)
-	ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (courseID) REFERENCES Course(courseID)
-	ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Timing(
-    scheduledToStudent int,
-    courseID int,
-    startDate DATE,
-    endDate DATE,
-    startTime TIME,
-    endTime TIME,
-    PRIMARY KEY (scheduledToStudent, courseID),
-    FOREIGN KEY (courseID) REFERENCES Course(courseID)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (scheduledToStudent) REFERENCES schedule(scheduledToStudent)
-    ON DELETE CASCADE ON UPDATE CASCADE
-);
 
 CREATE TABLE Allotment(
     instructorNo int,
