@@ -1,0 +1,3 @@
+run npm start to start the client
+run npm build to build the client for deployment
+
