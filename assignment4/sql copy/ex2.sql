@@ -1,5 +1,5 @@
 CREATE TABLE AdminStaff(
-    adminNo int,
+    adminNo int NOT NULL AUTO_INCREMENT,
     position varchar(255),
     startDate DATE,
     deptName varchar(255),
@@ -26,7 +26,7 @@ CREATE TABLE Classroom(
 
 --added reference to department
 CREATE TABLE Instructor(
-    instructorNo int,
+    instructorNo int NOT NULL AUTO_INCREMENT,
     classroomNo int,
     deptName varchar(255),
     coursesTaught int,
@@ -41,7 +41,7 @@ CREATE TABLE Instructor(
 );
 
 CREATE TABLE Student(
-    studentNo int,
+    studentNo int NOT NULL AUTO_INCREMENT,
     fName varchar(255),
     lName varchar(255),
     studentAge int,
@@ -58,16 +58,7 @@ CREATE TABLE Student(
     ON DELETE SET NULL ON UPDATE CASCADE
 );
 
---removed schedule
-CREATE TABLE Schedule(
-    scheduledToStudent int,
-    coursesEnrolled int,
-    totalStudentsEnrolled int,
-    studentNo int,
-    PRIMARY KEY (scheduledToStudent),
-    FOREIGN KEY (studentNo) REFERENCES Student(studentNo)
-    ON DELETE SET NULL ON UPDATE CASCADE
-);
+
 
 CREATE TABLE Course(
     courseID int,
@@ -84,9 +75,9 @@ CREATE TABLE Course(
     FOREIGN KEY (instructorNo) REFERENCES Instructor(instructorNo)
     ON DELETE SET NULL ON UPDATE CASCADE
 );
---changed timing name to section, added id
+--changed timing name to section, added id with auto increment
 CREATE TABLE Section(
-    sectionID int,
+    sectionID int NOT NULL AUTO_INCREMENT,
     courseID int,
     startDate DATE,
     endDate DATE,
@@ -110,7 +101,7 @@ CREATE TABLE Enrollment(
 );
 
 CREATE TABLE CourseEquipment(
-    deviceNo int,
+    deviceNo int NOT NULL AUTO_INCREMENT,
     deviceName varchar(255),
     courseAssigned int,
     studentNo int,
