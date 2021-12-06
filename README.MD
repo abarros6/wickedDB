@@ -4,6 +4,6 @@ ASSIGNMENT 4 - Functionalities
 3. Given a student name and a course name, find other students in the same section. DONE
 4. Add a new student to the student relation. DONE
 5. Increase the salaries of all instructors of a department by a selected percent. DONE
-6. an aditional complex functionality. 
+6. look up a student name and find all the courses they are taking. DONE 
 7. Quit
 Front-end/Backend Brainstorm

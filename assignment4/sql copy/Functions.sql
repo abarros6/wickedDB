@@ -1,6 +1,6 @@
 --given student name find their info
 SELECT* 
-FROM student
+FROM Student
 WHERE fName=//given AND lName= //given;
 
 --find the lowest salaried staff from each department
@@ -28,6 +28,12 @@ VALUES (//allgiven);
 UPDATE Instructor
 SET salary = salary* //given%
 WHERE deptName = given;
+
+--look up a student name and find all the courses they are taking
+--note: this function is highly ineficient
+SELECT t.courseID, e.startTime, e.endTime
+FROM Enrollment e, Student s, Section t
+WHERE s.fName = //given AND s.lName = //given AND s.studentNo = e.studentNo AND e.sectionID = t.sectionID;
 
 
 
