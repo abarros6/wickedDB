@@ -1,4 +1,14 @@
 //this is where i will initialize the database
+import{deptContent,
+    adminContent,
+    classContent,
+    instructorContent,
+    studentContent,
+    courseContent,
+    sectionContent,
+    enrollmentContent,
+    equipmentContent,
+    allotmentContent} from './populate.js';
 
 const mysql = require('mysql');
 
@@ -12,85 +22,165 @@ const conn = mysql.createConnection({
 conn.connect();
 
 //if there are tables in place already then reset them
-conn.query(`Drop Table Time`,
+conn.query(`Drop Table Allotment,CourseEquipment,Enrollment,Section,Course,Student,Instructor,AdminStaff,Classroom,Department`,
                 (err,rows,fields) => {
                     if (err)
                         console.log(err);
                     else
-                        console.log('Table Dropped');
+                        console.log('Tables Dropped');
                 }
             )
 
-conn.query(`Drop Table Users`,
-            (err,rows,fields) => {
-                if (err)
-                    console.log(err);
-                else
-                    console.log('Table Dropped');
-            }
-        )
 
 
-//init the time table with values that only the admin user can edit
-conn.query(`CREATE TABLE Time
-            (
-                T1 varchar(50),
-                T2 varchar(50),
-                T3 varchar(50),
-                T4 varchar(50),
-                T5 varchar(50),
-                T6 varchar(50),
-                T7 varchar(50),
-                T8 varchar(50),
-                T9 varchar(50),
-                T10 varchar(50)
-            )
+
+//init the tables
+conn.query(`
+CREATE TABLE Department(
+    deptName varchar(255),
+    instructorsAssiged int,
+    studentsEnrolled int,
+    PRIMARY KEY (deptName)
+);
+--removed instructor no as instructor already holds a reference to classNo
+CREATE TABLE Classroom(
+    classroomNo int NOT NULL AUTO_INCREMENT,
+    classroomQuantity int,
+    --number of courses tought
+    coursesTaught int,
+    PRIMARY KEY (classroomNo)
+);
+
+CREATE TABLE AdminStaff(
+    adminNo int NOT NULL AUTO_INCREMENT,
+    position varchar(255),
+    startDate DATE,
+    deptName varchar(255),
+    fName varchar(255),
+    lName varchar(255),
+    salary int,
+    PRIMARY KEY (adminNo),
+    FOREIGN KEY (deptName) REFERENCES Department(deptName)
+    ON DELETE SET NULL ON UPDATE CASCADE  
+);
+
+--added reference to department--instructor no longer hold reference to classroom number
+CREATE TABLE Instructor(
+    instructorNo int NOT NULL AUTO_INCREMENT,
+    deptName varchar(255),
+    coursesTaught int,
+    fName varchar(255),
+    lName varchar(255),
+    salary int,
+    PRIMARY KEY (instructorNo),
+    FOREIGN KEY (deptName) REFERENCES Department(deptName)
+    ON DELETE SET NULL ON UPDATE CASCADE  
+);
+
+CREATE TABLE Student(
+    studentNo int NOT NULL AUTO_INCREMENT,
+    fName varchar(255),
+    lName varchar(255),
+    studentAge int,
+    studentYear int,
+    studentAverage int,
+    creditsToDate int,
+    numberOfClasses int,
+    classroomNo int,
+    instructorNo int,
+    PRIMARY KEY (studentNo),
+    FOREIGN KEY (classroomNo) REFERENCES Classroom(classroomNo)
+    ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (instructorNo) REFERENCES Instructor(instructorNo)
+    ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+
+CREATE TABLE Course(
+    courseID int NOT NULL AUTO_INCREMENT,
+    courseName varchar(255),
+    courseClassroom int,
+    deptName varchar(255),
+    courseYear int,
+    instructorNo int,
+    PRIMARY KEY (courseID),
+    FOREIGN KEY (courseClassroom) REFERENCES Classroom(classroomNo)
+    ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (deptName) REFERENCES Department(deptName)
+    ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (instructorNo) REFERENCES Instructor(instructorNo)
+    ON DELETE SET NULL ON UPDATE CASCADE
+);
+--changed timing name to section, added id with auto increment
+CREATE TABLE Section(
+    sectionID int NOT NULL AUTO_INCREMENT,
+    courseID int,
+    startDate DATE,
+    endDate DATE,
+    startTime TIME,
+    endTime TIME,
+    PRIMARY KEY (sectionID),
+    FOREIGN KEY (courseID) REFERENCES Course(courseID)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+);
+--enrollment now references a section 
+CREATE TABLE Enrollment(
+    studentNo int,
+    sectionID int,
+    dateEnrolled DATE,
+
+    PRIMARY KEY (studentNo,sectionID),
+    FOREIGN KEY (studentNo) REFERENCES Student(studentNo)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (sectionID) REFERENCES Section(sectionID)
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE CourseEquipment(
+    deviceNo int NOT NULL AUTO_INCREMENT,
+    deviceName varchar(255),
+    courseAssigned int,
+    studentNo int,
+    dueDate DATE,
+    PRIMARY KEY (deviceNo),
+    FOREIGN KEY (courseAssigned) REFERENCES Course(courseID)
+    ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (studentNo) REFERENCES Student(studentNo)
+    ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+CREATE TABLE Allotment(
+    instructorNo int,
+    classroomNo int,
+    dateAssigned DATE,
+    timeAssigned TIME,
+    PRIMARY KEY (instructorNo,classroomNo),
+    FOREIGN KEY (instructorNo) REFERENCES Instructor(instructorNo)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (classroomNo) REFERENCES Classroom(classroomNo)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
             ` 
             , (err,rows,fields) => {
                 if (err)
                     console.log(err);
                 else
-                    console.log('Table Created');
+                    console.log('Tables Created');
             })
 
-//the int data type is used to represent the true = 1 and false = 0
-conn.query(`CREATE TABLE Users
-            (
-                Name varchar(100),
-                T1 varchar(100),
-                T2 varchar(100),
-                T3 varchar(100),
-                T4 varchar(100),
-                T5 varchar(100),
-                T6 varchar(100),
-                T7 varchar(100),
-                T8 varchar(100),
-                T9 varchar(100),
-                T10 varchar(100)
-            )
-            ` 
-            , (err,rows,fields) => {
-                if (err)
-                    console.log(err);
-                else
-                    console.log('Table Created');
-            })
 
-conn.query( `insert into Time values (0,1,2,3,5,6,7,8,9,10)`
+
+conn.query( deptContent
             , (err,rows,fields) => {
                 if (err)
                     console.log(err);
                 else
-                    console.log('One row inserted');
+                    console.log('data inserted');
             });
 
-conn.query( `insert into Users values ('Example entry','false','false','false','false','false','false','false','false','false','false')`
-            , (err,rows,fields) => {
-                if (err)
-                    console.log(err);
-                else
-                    console.log('One row inserted');
-            });
+
 
 
 conn.end();
