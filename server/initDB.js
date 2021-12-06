@@ -10,16 +10,20 @@ import{deptContent,
     equipmentContent,
     allotmentContent} from './populate.js';
 
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const conn = mysql.createConnection({
-    host:'34.134.27.235',
+    host:'127.0.0.1',
     user: 'root',
-    password:'mypassword',
-    database:'usersDB'
+    password:'',
+    database:'sys',
+    port: '3306'
 });
 
-conn.connect();
+conn.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
 
 //if there are tables in place already then reset them
 conn.query(`Drop Table Allotment,CourseEquipment,Enrollment,Section,Course,Student,Instructor,AdminStaff,Classroom,Department`,
@@ -30,9 +34,6 @@ conn.query(`Drop Table Allotment,CourseEquipment,Enrollment,Section,Course,Stude
                         console.log('Tables Dropped');
                 }
             )
-
-
-
 
 //init the tables
 conn.query(`
@@ -243,10 +244,6 @@ conn.query( allotmentContent
         else
             console.log('data inserted');
     });
-
-
-
-
 
 
 conn.end();
