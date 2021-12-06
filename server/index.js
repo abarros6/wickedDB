@@ -75,14 +75,32 @@ app.get('/', (req, res) => {
   res.sendFile('/frontend/index.html', { root: __dirname })
 })
 
-app.get('/guest', (req, res) => {
-  res.sendFile('/frontend/guest.html', { root: __dirname })
+app.get('/page1', (req, res) => {
+  res.sendFile('/frontend/page1.html', { root: __dirname })
 })
 
-app.get('/admin', (req, res) => {
-  res.sendFile('/frontend/admin.html', { root: __dirname })
+app.get('/page2', (req, res) => {
+  res.sendFile('/frontend/page2.html', { root: __dirname })
 })
 
+app.get('/page3', (req, res) => {
+  res.sendFile('/frontend/page3.html', { root: __dirname })
+})
+
+app.get('/page4', (req, res) => {
+  res.sendFile('/frontend/page4.html', { root: __dirname })
+})
+
+app.get('/page5', (req, res) => {
+  res.sendFile('/frontend/page5.html', { root: __dirname })
+})
+
+app.get('/page6', (req, res) => {
+  res.sendFile('/frontend/page6.html', { root: __dirname })
+})
+
+
+/*
 app.get('/login', (req, res) => {
   let userName = req.query.usr;
   let password = req.query.pwd;
@@ -123,6 +141,7 @@ app.get('/add-times', (req,res) => {
 
   conn.end();
 })
+*/
 
 app.use(express.static('frontend'))
 // make the app listen to port 80 as specified in the project instructions
