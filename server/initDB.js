@@ -171,14 +171,80 @@ CREATE TABLE Allotment(
             })
 
 
-
+//populate the tables
 conn.query( deptContent
-            , (err,rows,fields) => {
-                if (err)
-                    console.log(err);
-                else
-                    console.log('data inserted');
-            });
+    , (err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });
+
+conn.query( adminContent
+    , (err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });          
+conn.query( classContent
+    ,(err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });
+conn.query( instructorContent
+    ,(err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });
+conn.query( studentContent
+    ,(err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });
+conn.query( courseContent
+    ,(err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });
+conn.query( sectionContent
+    ,(err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });
+conn.query( enrollmentContent
+    ,(err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });
+conn.query( equipmentContent
+    ,(err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });
+conn.query( allotmentContent
+    ,(err,rows,fields) => {
+        if (err)
+            console.log(err);
+        else
+            console.log('data inserted');
+    });
+
+
 
 
 
