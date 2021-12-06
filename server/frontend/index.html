@@ -15,10 +15,6 @@
             All times are according to a 24 hour clock. <br> To use the app simply check the times list to see <br> when the available times are, then edit the <br> users list by following the below link to use the app <br> as a guest to enter your name and your specific availability.
         </p>
 
-        <br/>
-
-        <a href='/guest'>Click here to sign in as a guest</a>
-
         <br>
         <br>
         <br>
@@ -26,36 +22,30 @@
         <hr>
 
         <br/>
-
-        <form action = '/login' method='get'> 
-            user name : <input name = 'usr' type = 'text'/>
-            <br/> 
-            password : <input name = 'pwd' type = 'text'/>
-            <br/>
-            <input type = 'submit'/>
-        </form>
-
-        <br/>
         <br/>
         <br/>
 
-        <div classname = 'timeTable'>
-            <form action = '/timeDisplay' method = 'get'>
-                <input type = 'submit' value = 'display the times'/>
-            </form>
+
+        <div id = "container">
+            <div class = "item">
+                <a href='/page1'>Functionality 1: Look up students by name and all related information</a>
+            </div>
+            <div class = "item">
+                <a href='/page2'>Functionality 2: Find the lowest salaried staff for all departments</a>
+            </div>
+            <div class = "item">
+                <a href='/page3'>Functionality 2: Given a student name and a course name, find other students in the same section</a>
+            </div>
+            <div class = "item">
+                <a href='/page4'>Functionality 2: Add a new student to the student relation</a>
+            </div>
+            <div class = "item">
+                <a href='/page5'>Functionality 2: Increase the salaries of all instructors of a department by a selected percent.</a>
+            </div>
+            <div class = "item">
+                <a href='/page6'>Functionality 2: look up a student name and find all the courses they are taking.</a>
+            </div>
         </div>
-
-        <br/>
-        <br/>
-        <br/>
-
-        <div classname = 'usersTable'>
-            <form action = '/userDisplay' method = 'get'>
-                <input type = 'submit' value = 'display the users with their availability'/>
-            </form>
-        </div>
-
-        <a href='/guest'>Click here to sign in as a guest</a>
 
         
     </body>
