@@ -14,7 +14,7 @@ wicked.get('/functionality1', (req, res) => {
   conn.connect();
 
 
-  
+})
 // -----
 
 // functionality2
@@ -23,7 +23,7 @@ wicked.get('/functionality2', (req, res) => {
   conn.connect();
 
 
-
+})
 // -----
 
 // functionality3
@@ -32,7 +32,7 @@ wicked.get('/functionality3', (req, res) => {
   conn.connect();
 
 
-
+})
 // -----
 
 // functionality4
@@ -41,7 +41,7 @@ wicked.get('/functionality4', (req, res) => {
   conn.connect();
 
 
-
+})
 // -----
 
 // functionality5
@@ -50,7 +50,7 @@ wicked.get('/functionality5', (req, res) => {
   conn.connect();
 
 
-
+})
 // -----
 
 // functionality6
@@ -59,7 +59,7 @@ wicked.get('/functionality6', (req, res) => {
   conn.connect();
 
 
-
+})
 // -----
 
 
