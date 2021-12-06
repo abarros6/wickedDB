@@ -7,7 +7,7 @@ CREATE TABLE Department(
 );
 --removed instructor no as instructor already holds a reference to classNo
 CREATE TABLE Classroom(
-    classroomNo int,
+    classroomNo int NOT NULL AUTO_INCREMENT,
     classroomQuantity int,
     --number of courses tought
     coursesTaught int,
@@ -27,18 +27,15 @@ CREATE TABLE AdminStaff(
     ON DELETE SET NULL ON UPDATE CASCADE  
 );
 
---added reference to department
+--added reference to department--instructor no longer hold reference to classroom number
 CREATE TABLE Instructor(
     instructorNo int NOT NULL AUTO_INCREMENT,
-    classroomNo int,
     deptName varchar(255),
     coursesTaught int,
     fName varchar(255),
     lName varchar(255),
     salary int,
     PRIMARY KEY (instructorNo),
-    FOREIGN KEY (classroomNo) REFERENCES Classroom(classroomNo)
-    ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (deptName) REFERENCES Department(deptName)
     ON DELETE SET NULL ON UPDATE CASCADE  
 );
@@ -64,7 +61,7 @@ CREATE TABLE Student(
 
 
 CREATE TABLE Course(
-    courseID int,
+    courseID int NOT NULL AUTO_INCREMENT,
     courseName varchar(255),
     courseClassroom int,
     deptName varchar(255),

@@ -6,4 +6,12 @@ ASSIGNMENT 4 - Functionalities
 5. Increase the salaries of all instructors of a department by a selected percent. DONE
 6. look up a student name and find all the courses they are taking. DONE 
 7. Quit
+
+TO DO:
+1. client setup
+2. server setup
+3. database funtionalities. DONE
+4. database table creation/population. DONE 
+5. server-database connection
+
 Front-end/Backend Brainstorm
