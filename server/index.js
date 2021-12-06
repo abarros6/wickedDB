@@ -13,7 +13,14 @@ wicked.get('/functionality1', (req, res) => {
   let conn = newConnection();
   conn.connect();
 
+  conn.query(`select * from Student where fName = lName =`, (err,rows,fields) => {
+    if (err)
+      res.send('ERROR: ' +err)
+    else {
 
+    }
+
+  })
 })
 // -----
 
